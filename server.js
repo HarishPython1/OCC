@@ -13,6 +13,16 @@ app.get("/", (req, res) => {
   res.send("Welcome to my API!");
 });
 
+// Define a route for registration
+router.get("/register", (req, res) => {
+    res.json({ message: "Register API is working!" });
+  });
+
+  // Define a route for registration
+router.get("/login", (req, res) => {
+    res.json({ message: "Login API is working!" });
+  });
+
 // Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI, {
