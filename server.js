@@ -2,18 +2,18 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
-
-dotenv.config(); // Load environment variables from .env
+dotenv.config();  // Load environment variables
 
 const app = express();
-app.use(express.json()); // Middleware to parse JSON
+app.use(express.json()); // For parsing JSON bodies
 
-// Define a simple homepage route
-app.get("/", (req, res) => {
-  res.send("Welcome to my API!");
-});
+// Import your routes
+const authRoutes = require("./routes/auth"); 
 
-// Connect to MongoDB
+// Use your routes for the path '/api/auth'
+app.use("/api/auth", authRoutes);
+
+// MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -22,6 +22,5 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log("MongoDB Connection Error:", err));
 
-// Start server on Render-assigned port
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

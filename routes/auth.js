@@ -9,6 +9,7 @@ const authRoutes = require("./routes/auth");
 app.use("/api/auth", authRoutes);
 
 
+
 // Register User
 router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
