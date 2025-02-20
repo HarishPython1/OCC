@@ -1,21 +1,26 @@
-require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const authRoutes = require("./routes/auth");
+const dotenv = require("dotenv");
+
+dotenv.config(); // Load environment variables from .env
 
 const app = express();
-app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json()); // Middleware to parse JSON
+
+// Define a simple homepage route
+app.get("/", (req, res) => {
+  res.send("Welcome to my API!");
+});
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
+  .catch((err) => console.log("MongoDB Connection Error:", err));
 
-app.use("/api/auth", authRoutes);
-
+// Start server on Render-assigned port
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
